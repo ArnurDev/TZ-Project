@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		681FAB882DEC60BB007C2898 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 681FAB872DEC60BB007C2898 /* FirebaseAnalytics */; };
+		681FAB8A2DEC60BB007C2898 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 681FAB892DEC60BB007C2898 /* FirebaseCore */; };
+		681FAB982DEC6214007C2898 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 681FAB972DEC6214007C2898 /* FirebaseRemoteConfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		681FAB1B2DEC28C5007C2898 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -35,16 +41,6 @@
 			path = "TZ project";
 			sourceTree = "<group>";
 		};
-		681FAB1D2DEC28C5007C2898 /* TZ projectTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "TZ projectTests";
-			sourceTree = "<group>";
-		};
-		681FAB272DEC28C5007C2898 /* TZ projectUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "TZ projectUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +48,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				681FAB982DEC6214007C2898 /* FirebaseRemoteConfig in Frameworks */,
+				681FAB8A2DEC60BB007C2898 /* FirebaseCore in Frameworks */,
+				681FAB882DEC60BB007C2898 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				681FAB0C2DEC28C3007C2898 /* TZ project */,
-				681FAB1D2DEC28C5007C2898 /* TZ projectTests */,
-				681FAB272DEC28C5007C2898 /* TZ projectUITests */,
 				681FAB0B2DEC28C3007C2898 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +109,9 @@
 			);
 			name = "TZ project";
 			packageProductDependencies = (
+				681FAB872DEC60BB007C2898 /* FirebaseAnalytics */,
+				681FAB892DEC60BB007C2898 /* FirebaseCore */,
+				681FAB972DEC6214007C2898 /* FirebaseRemoteConfig */,
 			);
 			productName = "TZ project";
 			productReference = 681FAB0A2DEC28C3007C2898 /* TZ project.app */;
@@ -129,9 +129,6 @@
 			);
 			dependencies = (
 				681FAB1C2DEC28C5007C2898 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				681FAB1D2DEC28C5007C2898 /* TZ projectTests */,
 			);
 			name = "TZ projectTests";
 			packageProductDependencies = (
@@ -152,9 +149,6 @@
 			);
 			dependencies = (
 				681FAB262DEC28C5007C2898 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				681FAB272DEC28C5007C2898 /* TZ projectUITests */,
 			);
 			name = "TZ projectUITests";
 			packageProductDependencies = (
@@ -195,6 +189,9 @@
 			);
 			mainGroup = 681FAB012DEC28C3007C2898;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				681FAB822DEC5CD4007C2898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 681FAB0B2DEC28C3007C2898 /* Products */;
 			projectDirPath = "";
@@ -552,6 +549,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		681FAB822DEC5CD4007C2898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		681FAB872DEC60BB007C2898 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 681FAB822DEC5CD4007C2898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		681FAB892DEC60BB007C2898 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 681FAB822DEC5CD4007C2898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		681FAB972DEC6214007C2898 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 681FAB822DEC5CD4007C2898 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 681FAB022DEC28C3007C2898 /* Project object */;
 }

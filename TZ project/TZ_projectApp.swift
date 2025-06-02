@@ -1,17 +1,20 @@
-//
-//  TZ_projectApp.swift
-//  TZ project
-//
-//  Created by Гаухар Байкен on 01.06.2025.
-//
-
 import SwiftUI
+import FirebaseCore
 
 @main
 struct TZ_projectApp: App {
+    @StateObject var webVM = WebViewModel()
+
+    init() {
+        FirebaseApp.configure()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environmentObject(webVM) 
         }
     }
 }
+
+
