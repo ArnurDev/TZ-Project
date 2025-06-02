@@ -10,6 +10,7 @@ class WebViewModel: ObservableObject {
     private let savedKey = "SavedWebViewURL"
     
     init() {
+        print("WebViewModel init")
         loadSavedURL()
         fetchRemoteConfig()
     }
@@ -19,10 +20,14 @@ class WebViewModel: ObservableObject {
         if let urlString = UserDefaults.standard.string(forKey: savedKey),
            let url = URL(string: urlString) {
             self.savedURL = url
-            self.showWebView = true // приоритет сохранённой ссылки
+            self.showWebView = true
+            print("Loaded saved URL from UserDefaults: \(url.absoluteString)")
+        } else {
+            print("No saved URL in UserDefaults")
         }
     }
     
+    /// Запрашивает параметры из RemoteConfig и обновляет состояние
     private func fetchRemoteConfig() {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 0
@@ -31,28 +36,44 @@ class WebViewModel: ObservableObject {
         remoteConfig.fetchAndActivate { [weak self] status, error in
             guard let self = self else { return }
 
+            if let error = error {
+                print("RemoteConfig fetch error: \(error.localizedDescription)")
+            }
+
             let needForceUpdate = self.remoteConfig["needForceUpdate"].boolValue
             let redirectLink = self.remoteConfig["redirectLink"].stringValue ?? ""
 
-            print("RemoteConfig — needForceUpdate: \(needForceUpdate), link: \(redirectLink)")
+            print("RemoteConfig fetched — needForceUpdate: \(needForceUpdate), redirectLink: \(redirectLink)")
 
             if needForceUpdate, let url = URL(string: redirectLink) {
                 DispatchQueue.main.async {
-                    if self.savedURL == nil {
-                        UserDefaults.standard.set(url.absoluteString, forKey: self.savedKey)
-                        self.savedURL = url
-                    }
+                    UserDefaults.standard.set(url.absoluteString, forKey: self.savedKey)
+                    self.savedURL = url
                     self.showWebView = true
+                    print("Saved URL set from RemoteConfig: \(url.absoluteString)")
+                    print("showWebView set to true due to RemoteConfig")
                 }
             } else {
-                print("RemoteConfig: Показываем заглушку")
+                print("RemoteConfig: needForceUpdate is false, not changing showWebView or savedURL")
+                // Не сбрасываем showWebView, чтобы не скрывать WebView если URL уже есть
             }
         }
     }
-
-    /// Возврат к приложению (для тестов)
+    
+    /// Ручная установка тестового URL (для отладки)
+    func manualOverride() {
+        DispatchQueue.main.async {
+            let testURL = URL(string: "https://en.wikipedia.org/wiki/The_Lord_of_the_Rings")!
+            UserDefaults.standard.set(testURL.absoluteString, forKey: self.savedKey)
+            self.savedURL = testURL
+            self.showWebView = true
+            print("Manual override: showWebView = true with test URL")
+        }
+    }
+    
+    /// Сброс отображения WebView (например, при закрытии)
     func reset() {
+        print("Reset called - hiding WebView")
         self.showWebView = false
     }
 }
-        
