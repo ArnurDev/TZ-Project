@@ -15,7 +15,6 @@ class WebViewModel: ObservableObject {
         fetchRemoteConfig()
     }
     
-    /// Загружает сохранённую ссылку из UserDefaults (если она есть)
     private func loadSavedURL() {
         if let urlString = UserDefaults.standard.string(forKey: savedKey),
            let url = URL(string: urlString) {
@@ -27,7 +26,6 @@ class WebViewModel: ObservableObject {
         }
     }
     
-    /// Запрашивает параметры из RemoteConfig и обновляет состояние
     private func fetchRemoteConfig() {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 0
@@ -55,12 +53,10 @@ class WebViewModel: ObservableObject {
                 }
             } else {
                 print("RemoteConfig: needForceUpdate is false, not changing showWebView or savedURL")
-                // Не сбрасываем showWebView, чтобы не скрывать WebView если URL уже есть
             }
         }
     }
     
-    /// Ручная установка тестового URL (для отладки)
     func manualOverride() {
         DispatchQueue.main.async {
             let testURL = URL(string: "https://en.wikipedia.org/wiki/The_Lord_of_the_Rings")!
@@ -71,7 +67,6 @@ class WebViewModel: ObservableObject {
         }
     }
     
-    /// Сброс отображения WebView (например, при закрытии)
     func reset() {
         print("Reset called - hiding WebView")
         self.showWebView = false

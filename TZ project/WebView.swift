@@ -6,39 +6,41 @@ struct WebView: UIViewRepresentable {
     @Binding var isLoading: Bool
 
     func makeUIView(context: Context) -> WKWebView {
-        let config = WKWebViewConfiguration()
-        let webView = WKWebView(frame: .zero, configuration: config)
+        let webView = WKWebView()
         webView.navigationDelegate = context.coordinator
+        let request = URLRequest(url: url)
+        webView.load(request)
         return webView
     }
 
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        webView.load(URLRequest(url: url))
+    func updateUIView(_ uiView: WKWebView, context: Context) {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(isLoading: $isLoading)
+        Coordinator(self)
     }
 
     class Coordinator: NSObject, WKNavigationDelegate {
-        @Binding var isLoading: Bool
+        let parent: WebView
 
-        init(isLoading: Binding<Bool>) {
-            _isLoading = isLoading
+        init(_ parent: WebView) {
+            self.parent = parent
         }
 
         func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-            isLoading = true
+            parent.isLoading = true
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            isLoading = false
+            parent.isLoading = false
         }
 
         func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-            isLoading = false
+            parent.isLoading = false
+        }
+
+        func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+            parent.isLoading = false
         }
     }
 }
-
-
